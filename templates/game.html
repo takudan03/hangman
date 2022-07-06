@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman!</title>
+</head>
+<body>
+
+<div class="squares">
+    <form>
+    {% for chr in wordSpl %}
+        <input type="text" size="1" placeholder="{{chr}}">
+    {% endfor %}
+    </form>
+</div>
+
+<h2>Click on the letters below to guess the word!</h2>
+
+<div class="alphabet">
+    <form method="">
+    {% for i in alph %}
+        <button class="alphabet-letter" id='{{i}}' type="submit">{{i}}</button>
+    {% endfor %}
+    </form>
+</div>
+
+</body>
+</html>

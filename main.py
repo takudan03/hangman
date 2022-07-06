@@ -1,5 +1,9 @@
 from random import randrange
 
+
+
+
+
 # pick random word from dictionary file
 wordlistFile = open('wordlist.txt', 'r')
 wordlist = []
@@ -63,34 +67,3 @@ while i <= allowed_guesses or len(new_list) == len(word_split):
     print_list()
 else:
     print("You have failed. DOLOLO")
-
-
-
-
-# Make GUI for hangman game
-# import tkinter as tk
-# from PIL import Image, ImageTk
-#
-# root = tk.Tk()
-#
-# canvas = tk.Canvas(root, width=400, height=420, relief='raised')
-# canvas.pack()
-# img = Image.open(r'C:\\Users\\User\\Jupyter Projects\\hangman\\car2.png')
-# img = img.resize((50, 50), Image.ANTIALIAS)
-# img = ImageTk.PhotoImage(img, master=root)
-# canvas.create_image(200, 200, image=img)
-#
-# for i in range(wordlen):
-#     entry
-#
-# label = tk.Label(root, text='HANGMAN', font=("Helvetica", 16))
-# canvas.create_window(200, 100, window=label)
-#
-# # labelimg=tk.Label(root, image=img)
-# # labelimg.place(x=200,y=200)
-#
-# root.wm_title("Tkinter window")
-# root.geometry("200x120")
-# root.mainloop()
-
-# Maybe make multiplayer logic
