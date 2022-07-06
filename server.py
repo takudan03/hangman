@@ -18,9 +18,9 @@ def initialize_game():
     for line in wordlistFile:
         wordlist.append(line)
     wordlistFile.close()
-    # word = wordlist[randrange(0, len(wordlist))].strip()
-    return wordlist[randrange(0, len(wordlist))].strip()
-    # print(word)
+    word = wordlist[randrange(0, len(wordlist))].strip()
+    print(word)
+    return word
     # return word
     # wordlen = len(word)
     # return list(word.upper()) # Split into char array
@@ -39,6 +39,7 @@ def hello():
 def play():
     word=request.cookies.get('current_word')
     word_split=list(word.upper())
+
     return render_template('game.html', alph=alphabet_list, wordSpl=word_split)
 
 
@@ -46,6 +47,7 @@ def play():
 def move_forward():
     #Moving forward code
     forward_message = "Moving Forward..."
-    return render_template('index.html', forward_message=forward_message);
+    return render_template('index.html', forward_message=forward_message)
+
 
 app.run()
