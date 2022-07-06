@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman!</title>
+    <script src="{{url_for('static',filename='assets/game.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/style.css')}}">
 </head>
 <body>
 
 <div class="squares">
-    <form>
     {% for chr in wordSpl %}
-        <input type="text" size="1" placeholder="{{chr}}">
+        <div class="square">
+            {{chr}}
+        </div>
     {% endfor %}
-    </form>
 </div>
 
 <h2>Click on the letters below to guess the word!</h2>
 
-<div class="alphabet">
-    <form method="">
+<div class="alphabet" id="alphabet_button_container">
     {% for i in alph %}
-        <button class="alphabet-letter" id='{{i}}' type="submit">{{i}}</button>
+        <button class="alphabet-letter" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
     {% endfor %}
-    </form>
 </div>
 
 </body>

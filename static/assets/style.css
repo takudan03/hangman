@@ -1,6 +1,18 @@
 
 
-.alphabet-letter{
-    width: 10px;
-    height: 5px;
+
+
+.squares{
+    width:80%;
+    height: 25%;
+    text-align: center;
+}
+
+.square{
+    padding:5px;
+    border: 2px black solid;
+    display:inline-block;
+    text-align:center;
+    width:20px;
+    height:20px;
 }
