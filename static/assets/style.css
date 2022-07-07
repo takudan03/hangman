@@ -15,4 +15,6 @@
     text-align:center;
     width:20px;
     height:20px;
+    user-select: none;
+
 }
