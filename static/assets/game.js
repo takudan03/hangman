@@ -8,6 +8,9 @@ window.onload=function(){
 
     remaining_letters=squares.length;
     incorrect_guess_attempts=5;
+
+    tt=document.getElementById('temp-text');
+    tt.innerHTML=incorrect_guess_attempts;
 }
 
 
@@ -20,7 +23,8 @@ const onClick = (event) => {
 //        console.log(squares[i].textContent.trim());
         if (squares[i].textContent.trim() == event.target.id){
             char_exists=true;
-            squares[i].style.backgroundColor = "green";
+//            squares[i].style.backgroundColor = "green";
+            squares[i].style.color = "black";
             remaining_letters--;
             if (remaining_letters==0){
                 gameOver();
@@ -29,6 +33,7 @@ const onClick = (event) => {
     }
     if (!char_exists){
         incorrect_guess_attempts--;
+        tt.innerHTML=incorrect_guess_attempts;
         if (incorrect_guess_attempts==0){
             gameOver();
         }

@@ -6,9 +6,9 @@ from flask import Flask, render_template, request, redirect, url_for, flash, mak
 app = Flask("HANGMAN")
 
 alphabet_list = list(string.ascii_uppercase)
-word=''
-word_split=[]
-guessed_list=[]
+word = ''
+word_split = []
+guessed_list = []
 
 
 def initialize_game():
@@ -21,9 +21,7 @@ def initialize_game():
     word = wordlist[randrange(0, len(wordlist))].strip()
     print(word)
     return word
-    # return word
-    # wordlen = len(word)
-    # return list(word.upper()) # Split into char array
+
 
 @app.route('/', methods=['POST', 'GET'])
 def hello():
@@ -35,19 +33,12 @@ def hello():
         # return redirect(url_for('play'))
     return render_template('cover.html')
 
+
 @app.route('/play')
 def play():
-    word=request.cookies.get('current_word')
-    word_split=list(word.upper())
+    word = request.cookies.get('current_word')
+    word_split = list(word.upper())
 
     return render_template('game.html', alph=alphabet_list, wordSpl=word_split)
 
-
-@app.route("/", methods=['POST'])
-def move_forward():
-    #Moving forward code
-    forward_message = "Moving Forward..."
-    return render_template('index.html', forward_message=forward_message)
-
-
-app.run()
+app.run(port=5069)

@@ -8,21 +8,32 @@
 </head>
 <body>
 
-<div class="squares">
-    {% for chr in wordSpl %}
-        <div class="square" id>
-            {{chr}}
+<header>
+    <h2>HANGMAN</h2>
+</header>
+<div class="display">
+    <div class="game-drawing">
+        <img src="{{url_for('static', filename='assets/meme-example.jpg')}}" width="100px">
+        Chances remaining: <span id="temp-text" ></span>
+    </div>
+
+    <div class="hud">
+        <div class="squares">
+            {% for chr in wordSpl %}
+                <div class="square" id>
+                    {{chr}}
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+
+        <h2>Click on the letters below to guess the word!</h2>
+
+        <div class="alphabet" id="alphabet_button_container">
+            {% for i in alph %}
+                <button class="alphabet-letter" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
+            {% endfor %}
+        </div>
+    </div>
 </div>
-
-<h2>Click on the letters below to guess the word!</h2>
-
-<div class="alphabet" id="alphabet_button_container">
-    {% for i in alph %}
-        <button class="alphabet-letter" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
-    {% endfor %}
-</div>
-
 </body>
 </html>
