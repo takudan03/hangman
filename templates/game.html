@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Hangman!</title>
     <script src="{{url_for('static',filename='assets/game.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static',filename='assets/style.css')}}">
 </head>
+
 <body>
 
-<header>
-    <h2>HANGMAN</h2>
-</header>
-<div class="display">
-    <div class="game-drawing">
-        <img src="{{url_for('static', filename='assets/meme-example.jpg')}}" width="100px">
-        Chances remaining: <span id="temp-text" ></span>
-    </div>
+    <header>
+        <h2>HANGMAN</h2>
+    </header>
+    <div class="display">
+        <div class="game-drawing">
+            <canvas id="canvas"></canvas>
+            Chances remaining: <span id="remainingGuessAttemptsText"></span>
+        </div>
 
-    <div class="hud">
-        <div class="squares">
-            {% for chr in wordSpl %}
+        <div class="hud">
+            <div class="squares" id="squares">
+                <!-- {% for chr in wordSpl %}
                 <div class="square" id>
                     {{chr}}
                 </div>
-            {% endfor %}
-        </div>
+                {% endfor %} -->
+            </div>
 
-        <h2>Click on the letters below to guess the word!</h2>
+            <h2>Click on the letters below to guess the word!</h2>
 
-        <div class="alphabet" id="alphabet_button_container">
-            {% for i in alph %}
+            <div class="alphabet" id="alphabet_button_container">
+                {% for i in alph %}
                 <button class="alphabet-letter" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+
+    <div id="eog-overlay">
+        <div id="overlay-content">
+            <h2 id="eog-prompt"></h1>
+            <button id="play-again" onclick="playGame()">Play Again!</button>
+        </div>
+    </div>
 </body>
+
 </html>
