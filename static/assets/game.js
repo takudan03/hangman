@@ -1,7 +1,7 @@
 var remaining_letters;
 var remainingGuessAttempts;
 
-var WORD="TESTING";
+var WORD = "TESTING";
 
 
 window.onload = function () {
@@ -9,53 +9,42 @@ window.onload = function () {
     remainingGuessAttemptsText = document.getElementById('remainingGuessAttemptsText');
     alphabet = document.getElementsByClassName('alphabet-letter')
     overlay = document.getElementById('eog-overlay');
-
+    overlayPrompt = document.getElementById('eog-prompt');
+    
     initializeGame();
 }
 
-function playGame() {
-    // TODO: implement start game overlay
-    // TODO: implement word select and start game
-    initializeGame()
+function renderGameBoard(word) {
+
 }
 
 async function getNewWord() {
-    word = await fetch('/new-word')
+    await fetch('/new-word')
         .then((response) => response.json())
         .then((data) => {
-            WORD=data["new-word"];
+            WORD = data["new-word"].toUpperCase();
             console.log(WORD);
-            // return word;
+            remaining_letters = WORD.length;
+            document.cookie = `current_word=${WORD}`
+        })
+        .then(() => {
+            // Render spaces for letters on the screen
+
+            msquares = document.getElementById('squares');
+            msquares.replaceChildren();
+
+            for (var i = 0; i < WORD.length; i++) {
+                var square = document.createElement('div');
+                square.classList.add("square");
+                square.innerHTML = WORD.substring(i, i + 1);
+                msquares.appendChild(square);
+            }
         });
 }
 
 function initializeGame() {
-    msquares = document.getElementById('squares');
-    msquares.replaceChildren();
-    
+
     getNewWord();
-
-    // getNewWord().then((word) => {
-    //     console.log(word);
-    //     for (var i = 0; i < word.length; i++) {
-    //         var square = document.createElement('div');
-    //         square.className = "square";
-    //         square.innerHTML = word.substring(i, i + 1);
-    //         console.log(word.substring(i, i + 1));
-    //         squares.appendChild(square);
-    //     }
-    // });
-
-    for (var i = 0; i < WORD.length; i++) {
-        var square = document.createElement('div');
-        square.classList.add("square");
-        square.innerHTML = WORD.substring(i, i + 1);
-        console.log(WORD.substring(i, i + 1));
-        msquares.appendChild(square);
-    }
-
-
-
 
     overlay.style.display = "none";
 
@@ -69,9 +58,9 @@ function initializeGame() {
     };
 
     const canvas = document.getElementById("canvas");
-    //Call to canvasCreator (for clearing previous canvas and creating initial canvas)
+    // Call to canvasCreator (for clearing previous canvas and creating initial canvas)
     let { initialDrawing } = canvasCreator();
-    //initialDrawing would draw the frame
+    // initialDrawing would draw the frame
     initialDrawing();
 }
 
@@ -81,8 +70,7 @@ const onClick = (event) => {
     event.target.disabled = true;
     let char_exists = false;
     for (let i = 0; i < squares.length; i++) {
-        //        console.log(squares[i].textContent.trim());
-        if (squares[i].textContent.trim() == event.target.id) {
+        if (squares[i].innerHTML.trim() == event.target.id) {
             char_exists = true;
             //            squares[i].style.backgroundColor = "green";
             squares[i].style.color = "black";
@@ -93,7 +81,7 @@ const onClick = (event) => {
         }
     }
 
-    // If the chosen letter does not exist in the word
+    // If the chosen letter is not in the word
     if (!char_exists) {
         drawMan(remainingGuessAttempts)
         remainingGuessAttempts--;
@@ -106,15 +94,15 @@ const onClick = (event) => {
 
 function gameOver() {
     document.getElementById('alphabet_button_container').removeEventListener("click", onClick);
-    prompt = document.getElementById('eog-prompt');
     if (remaining_letters == 0) {
         console.log("WIN");
-        prompt.innerHTML = "Congratulations! You have correctly guessed the word with " + remainingGuessAttempts + " guesses left!";
+        overlayPrompt.innerHTML = "Congratulations! You have correctly guessed the word with " + remainingGuessAttempts + " guesses left!";
     } else {
-        prompt.innerHTML = "Oh No! You have run out of guesses. Feel free to try again";
+        overlayPrompt.innerHTML = "Oh No! You have run out of guesses. Feel free to try again";
         console.log("OUT OF ATTEMPTS");
     }
     overlay.style.display = "block";
+    document.cookie = "current_word=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
 //Canvas
@@ -200,3 +188,26 @@ const drawMan = (count) => {
             break;
     }
 };
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkIfGameStarted() {
+    let current_word = getCookie("current_word");
+    if (current_word == "") {
+        return false;
+    }
+    return true;
+}

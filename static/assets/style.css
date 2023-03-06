@@ -64,8 +64,6 @@ header {
 canvas {
     display: block;
     margin: auto;
-    width:fit-content;
-    height: fit-content;
     border: 1px solid #000000;
 }
 
