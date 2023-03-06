@@ -6,6 +6,13 @@
     <title>Hangman!</title>
     <script src="{{url_for('static',filename='assets/game.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static',filename='assets/style.css')}}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -13,30 +20,40 @@
     <header>
         <h2>HANGMAN</h2>
     </header>
-    <div class="display">
-        <div class="game-drawing">
-            <canvas id="canvas"></canvas>
-            Chances remaining: <span id="remainingGuessAttemptsText"></span>
-        </div>
-
-        <div class="hud">
-            <div class="squares" id="squares">
+    <div class="display container-fluid">
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <div class="game-drawing">
+                    <canvas id="canvas"></canvas>
+                    Chances remaining: <span id="remainingGuessAttemptsText"></span>
+                </div>
             </div>
 
-            <h2>Click on the letters below to guess the word!</h2>
-
-            <div class="alphabet" id="alphabet_button_container">
-                {% for i in alph %}
-                <button class="alphabet-letter" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
-                {% endfor %}
+            <div class="col-md-6 align-self-center">
+                <div class="hud">
+                    <div class="squares" id="squares">
+                    </div>
+        
+                    <h2>Click on the letters below to guess the word!</h2>
+        
+                    <div class="alphabet" id="alphabet_button_container">
+                        {% for i in alph %}
+                        <button class="alphabet-letter btn btn-primary" id='{{i}}' type="submit" value='{{i}}'>{{i}}</button>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
+
+
+
     </div>
 
-    <div id="eog-overlay">
-        <div id="overlay-content">
-            <h2 id="eog-prompt"></h1>
-            <button id="play-again" onclick="initializeGame()">Play Again!</button>
+    <div id="game-dialog-overlay">
+        <div id="game-dialog-overlay-content">
+            <h2 id="game-dialog-prompt">
+                </h1>
+                <button id="play-again" onclick="onPlayButtonClick()">Play Game!</button>
         </div>
     </div>
 </body>

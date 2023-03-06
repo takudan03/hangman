@@ -1,5 +1,5 @@
 var remaining_letters;
-var remainingGuessAttempts;
+var remainingGuessAttempts = 6;
 
 var WORD = "TESTING";
 
@@ -8,14 +8,39 @@ window.onload = function () {
     squares = document.getElementsByClassName('square');
     remainingGuessAttemptsText = document.getElementById('remainingGuessAttemptsText');
     alphabet = document.getElementsByClassName('alphabet-letter')
-    overlay = document.getElementById('eog-overlay');
-    overlayPrompt = document.getElementById('eog-prompt');
-    
+    overlay = document.getElementById('game-dialog-overlay');
+    overlayPrompt = document.getElementById('game-dialog-prompt');
+
     initializeGame();
+
+    if (checkIfGameStarted()) {
+        //load game using current word
+        overlay.style.display="none";
+        WORD = getCookie("current_word");
+        renderGameBoard(WORD);
+        console.log(`game resumed. current word is ${WORD}`);
+    } else {
+        // SHow new game overlay
+        overlayPrompt.innerHTML = "Let's play Hangman! Click the button below to start."
+        overlay.style.display = "block"
+
+    }
+
 }
 
 function renderGameBoard(word) {
+    msquares = document.getElementById('squares');
+    msquares.replaceChildren();
 
+    for (var i = 0; i < WORD.length; i++) {
+        var square = document.createElement('div');
+        square.classList.add("square");
+        square.innerHTML = WORD.substring(i, i + 1);
+        msquares.appendChild(square);
+    }
+
+    remaining_letters = word.length;
+    remainingGuessAttemptsText.innerHTML = remainingGuessAttempts;
 }
 
 async function getNewWord() {
@@ -29,28 +54,20 @@ async function getNewWord() {
         })
         .then(() => {
             // Render spaces for letters on the screen
+            renderGameBoard(WORD);
+            // msquares = document.getElementById('squares');
+            // msquares.replaceChildren();
 
-            msquares = document.getElementById('squares');
-            msquares.replaceChildren();
-
-            for (var i = 0; i < WORD.length; i++) {
-                var square = document.createElement('div');
-                square.classList.add("square");
-                square.innerHTML = WORD.substring(i, i + 1);
-                msquares.appendChild(square);
-            }
+            // for (var i = 0; i < WORD.length; i++) {
+            //     var square = document.createElement('div');
+            //     square.classList.add("square");
+            //     square.innerHTML = WORD.substring(i, i + 1);
+            //     msquares.appendChild(square);
+            // }
         });
 }
 
 function initializeGame() {
-
-    getNewWord();
-
-    overlay.style.display = "none";
-
-    remaining_letters = squares.length;
-    remainingGuessAttempts = 6;
-    remainingGuessAttemptsText.innerHTML = remainingGuessAttempts;
 
     for (let i = 0; i < alphabet.length; i++) {
         alphabet[i].disabled = false;
@@ -121,28 +138,28 @@ const canvasCreator = () => {
 
     const head = () => {
         context.beginPath();
-        context.arc(70, 30, 10, 0, Math.PI * 2, true);
+        context.arc(160, 30, 10, 0, Math.PI * 2, true);
         context.stroke();
     };
 
     const body = () => {
-        drawLine(70, 40, 70, 80);
+        drawLine(160, 40, 160, 80);
     };
 
     const leftArm = () => {
-        drawLine(70, 50, 50, 70);
+        drawLine(160, 50, 140, 70);
     };
 
     const rightArm = () => {
-        drawLine(70, 50, 90, 70);
+        drawLine(160, 50, 180, 70);
     };
 
     const leftLeg = () => {
-        drawLine(70, 80, 50, 110);
+        drawLine(160, 80, 150, 110);
     };
 
     const rightLeg = () => {
-        drawLine(70, 80, 90, 110);
+        drawLine(160, 80, 180, 110);
     };
 
     //initial frame
@@ -150,13 +167,13 @@ const canvasCreator = () => {
         //clear canvas
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         //bottom line
-        drawLine(10, 130, 130, 130);
+        drawLine(100, 130, 220, 130);
         //left line
-        drawLine(10, 10, 10, 131);
+        drawLine(100, 10, 100, 131);
         //top line
-        drawLine(10, 10, 70, 10);
+        drawLine(100, 10, 160, 10);
         //small top line
-        drawLine(70, 10, 70, 20);
+        drawLine(160, 10, 160, 20);
     };
 
     return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
@@ -210,4 +227,10 @@ function checkIfGameStarted() {
         return false;
     }
     return true;
+}
+
+function onPlayButtonClick() {
+    initializeGame()
+    overlay.style.display = "none";
+    getNewWord();
 }
