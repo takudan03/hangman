@@ -1,5 +1,5 @@
 var remaining_letters;
-var remainingGuessAttempts = 6;
+var remainingGuessAttempts;
 
 var WORD = "TESTING";
 
@@ -38,7 +38,7 @@ function renderGameBoard(word) {
         square.innerHTML = WORD.substring(i, i + 1);
         msquares.appendChild(square);
     }
-
+    remainingGuessAttempts=6;
     remaining_letters = word.length;
     remainingGuessAttemptsText.innerHTML = remainingGuessAttempts;
 }
@@ -73,6 +73,8 @@ function initializeGame() {
         alphabet[i].disabled = false;
         alphabet[i].addEventListener('click', onClick);
     };
+    // remainingGuessAttempts=6;
+    // remainingGuessAttemptsText=remainingGuessAttempts;
 
     const canvas = document.getElementById("canvas");
     // Call to canvasCreator (for clearing previous canvas and creating initial canvas)
